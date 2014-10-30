@@ -12,7 +12,7 @@ With VirtualBox, Vagrant, and Command-Line Tools (needed for git on OS X) alread
 
 ##What it does
 Vagrantfile does the following things:  
-  - Imports hashicorp/precise32 basebox  
+  - Imports hashicorp/precise32 (Ubuntu 12.04 server) basebox  
   - Opens VM ports for Dashboard and Storage Service  
 ```Dashboard: Host port: 8080 => Guest port: 80```  
 ```Storage Service: Host port: 8000 => Guest port: 8000```  
