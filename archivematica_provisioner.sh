@@ -21,8 +21,8 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get -o Dpkg::Options::="--force-confnew" --force-yes -fuy upgrade
 
-#set installation configs early to avoid use input for mysql, mcp-server, and postfix
-#ran debconf-get-selections after a successful install and got these options.
+#set installation configs early to avoid user input for mysql, mcp-server, and postfix
+#Got these options after running debconf-get-selections on a successful manual install.
 sudo apt-get install -y debconf-utils
 cat << EOF | debconf-set-selections
 mysql-server-5.0 mysql-server/root_password password "$MYSQL_PASS"
