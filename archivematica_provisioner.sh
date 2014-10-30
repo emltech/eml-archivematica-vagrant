@@ -1,5 +1,3 @@
-declare -r MYSQL_PASS=sweeptakesconsequence
-
 sudo apt-get update
 sudo apt-get install -y python-software-properties
 sudo add-apt-repository -y ppa:archivematica/release
@@ -25,12 +23,12 @@ apt-get -o Dpkg::Options::="--force-confnew" --force-yes -fuy upgrade
 #Got these options after running debconf-get-selections on a successful manual install.
 sudo apt-get install -y debconf-utils
 cat << EOF | debconf-set-selections
-mysql-server-5.0 mysql-server/root_password password "$MYSQL_PASS"
-mysql-server-5.0 mysql-server/root_password_again password "$MYSQL_PASS"
+mysql-server-5.0 mysql-server/root_password password sweepstakes
+mysql-server-5.0 mysql-server/root_password_again password sweepstakes
 mysql-server-5.0 mysql-server/root_password seen true
 mysql-server-5.0 mysql-server/root_password_again seen true
-archivematica-mcp-server archivematica-mcp-server/password-confirm password "$MYSQL_PASS"
-archivematica-mcp-server archivematica-mcp-server/mysql/admin-pass password "$MYSQL_PASS"
+archivematica-mcp-server archivematica-mcp-server/password-confirm password sweepstakes
+archivematica-mcp-server archivematica-mcp-server/mysql/admin-pass password sweepstakes
 archivematica-mcp-server archivematica-mcp-server/app-password-confirm password test
 archivematica-mcp-server archivematica-mcp-server/db/dbname string MCP
 archivematica-mcp-server archivematica-mcp-server/database-type select mysql
