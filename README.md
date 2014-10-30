@@ -17,7 +17,7 @@ Vagrantfile does the following things:
 ```Dashboard: Host port: 8080 => Guest port: 80```  
 ```Storage Service: Host port: 8000 => Guest port: 8000```  
   - Makes a synced directory for easy ingests  
-```Host: archivematica_data Guest: /home/vagrant/archivematica_data"```  
+```Host: archivematica_data Guest: /home/vagrant/archivematica_data```  
   - Calls provisioner which follows Archivematica 1.3 install instructions. Configured to avoid user input.  
 
 To Do:  
