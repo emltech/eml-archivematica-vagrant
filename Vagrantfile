@@ -20,7 +20,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      v.cpus = 2
      v.customize ["modifyvm", :id, "--cpuexecutioncap", "75"]
   end
-  
+
+  config.vm.post_up_message = "Hello and congrats! Your Archivematcia VM is setup. 
+  If this is your first boot and you've just gone through provisioning, do the following:
+  1. Reboot the VM by typing 'vagrant halt' and then 'vagrant up'
+  2. Read the Archivematica installation instructions here:
+     https://www.archivematica.org/wiki/Install-1.3.0-packages
+     We've done everything up until the 'Test the storage service' section.
+  3. Follow the Archivematica instructions on setting up the Storage Service
+     available in your browser at:
+     http://localhost:8000
+  4. Follow the Archivematica instructions on setting up your account
+     available in your browser at
+     http://localhost:8080 
+  5. That's it!"
+
   #install everything needed for archivematica
   config.vm.provision "shell", path: "archivematica_provisioner.sh"
 end
