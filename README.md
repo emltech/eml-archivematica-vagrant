@@ -22,4 +22,4 @@ Vagrantfile does the following things:
 
 To Do:  
 - [ ] debconf-set-selections configuration file - from synced folder?
-
+- [ ] don't install python-software-properties, just append PPAs to /etc/apt/sources
