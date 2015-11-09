@@ -16,9 +16,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #good values for testing, may need more with content
   config.vm.provider "virtualbox" do |v|
      v.name = "archivematica_provisioner"
-     v.memory = 1024
-     v.cpus = 2
-     v.customize ["modifyvm", :id, "--cpuexecutioncap", "75"]
+     v.memory = 4096
+     v.cpus = 4
+     v.customize ["modifyvm", :id, "--cpuexecutioncap", "90"]
   end
 
   config.vm.post_up_message = "Hello and congrats! Your Archivematcia VM is setup. 
