@@ -1,14 +1,17 @@
 sudo apt-get update
 sudo apt-get install -y python-software-properties
-sudo add-apt-repository -y ppa:archivematica/release
-sudo add-apt-repository -y ppa:archivematica/externals
 
+#https://www.archivematica.org/en/docs/archivematica-1.4/admin-manual/installation/installation/#install-new
+#STEP 1
+sudo add-apt-repository -y ppa:archivematica/1.4
+
+#STEP 2
 sudo wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
-
 cat << EOF | sudo tee -a /etc/apt/sources.list
-deb http://packages.elasticsearch.org/elasticsearch/0.90/debian stable main
+deb http://packages.elasticsearch.org/elasticsearch/1.4/debian stable main
 EOF
 
+#STEP 3
 #Workaround for unattended GRUB upgrade. On upgrade, GRUB will ask for user input 
 #for configuration which will upset the vagrant install process.
 unset UCF_FORCE_CONFFOLD
@@ -46,25 +49,32 @@ archivematica-mcp-server archivematica-mcp-server/dbconfig-upgrade boolean true
 archivematica-mcp-server archivematica-mcp-server/missing-db-package-error select abort
 archivematica-mcp-server archivematica-mcp-server/dbconfig-reinstall boolean false
 postfix postfix/mailname string /etc/mailname
-postfix postfix/main_mailer_type select No configuration
+postfix postfix/main_mailer_type select Internet Site
 postfix postfix/rfc1035_violation boolean false
 postfix postfix/mynetworks string 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 postfix postfix/mailbox_limit string 0
 EOF
 
+#STEP 4
 sudo apt-get install -y archivematica-storage-service
+
+#STEP 5
+sudo rm -f /etc/nginx/sites-enabled/default
+sudo ln -s /etc/nginx/sites-available/storage /etc/nginx/sites-enabled/storage
+sudo ln -s /etc/uwsgi/apps-available/storage.ini /etc/uwsgi/apps-enabled/storage.ini
+sudo service uwsgi restart
+sudo service nginx restart
+
+#STEP 6
 sudo apt-get install -y archivematica-mcp-server
 sudo apt-get install -y archivematica-mcp-client
 sudo apt-get install -y archivematica-dashboard
 sudo apt-get install -y elasticsearch
 
-sudo wget -q https://raw.githubusercontent.com/artefactual/archivematica/stable/1.3.x/localDevSetup/apache/apache.default -O /etc/apache2/sites-available/default
-sudo rm /etc/nginx/sites-enabled/default
-sudo ln -s /etc/nginx/sites-available/storage /etc/nginx/sites-enabled/storage
-sudo ln -s /etc/uwsgi/apps-available/storage.ini /etc/uwsgi/apps-enabled/storage.ini
-
-sudo service uwsgi restart
-sudo service nginx restart
+#STEP 7
+sudo rm -f /etc/apache2/sites-enabled/*default*
+sudo wget -q https://raw.githubusercontent.com/artefactual/archivematica/stable/1.4.x/localDevSetup/apache/apache.default -O /etc/apache2/sites-available/default.conf
+sudo ln -s /etc/apache2/sites-available/default.conf /etc/apache2/sites-enabled/default.conf
 sudo /etc/init.d/apache2 restart
 sudo freshclam
 sudo /etc/init.d/clamav-daemon start
