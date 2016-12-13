@@ -15,7 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   #good values for testing, may need more with content
   config.vm.provider "virtualbox" do |v|
-     v.name = "archivematica_provisioner"
+     v.name = "archivematica_15_provisioner"
      v.memory = 4096
      v.cpus = 4
      v.customize ["modifyvm", :id, "--cpuexecutioncap", "90"]
