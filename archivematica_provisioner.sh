@@ -1,17 +1,25 @@
-sudo apt-get update
-sudo apt-get install -y python-software-properties
+#ARCHIVEMATICA 1.5 INSTALL
+
 
 #https://www.archivematica.org/en/docs/archivematica-1.4/admin-manual/installation/installation/#install-new
 #STEP 1
-sudo add-apt-repository -y ppa:archivematica/1.4
+
+sudo apt-get update
+sudo apt-get install -y python-software-properties
+sudo add-apt-repository -y ppa:archivematica/externals
 
 #STEP 2
-sudo wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo wget -O - https://packages.archivematica.org/1.5.x/key.asc | sudo apt-key add -
 cat << EOF | sudo tee -a /etc/apt/sources.list
-deb http://packages.elasticsearch.org/elasticsearch/1.4/debian stable main
+deb [arch=amd64] http://packages.archivematica.org/1.5.x/ubuntu trusty main
 EOF
 
 #STEP 3
+sudo wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+cat << EOF | sudo tee -a /etc/apt/sources.list
+deb http://packages.elasticsearch.org/elasticsearch/1.7/debian stable main
+EOF
+
 #Workaround for unattended GRUB upgrade. On upgrade, GRUB will ask for user input 
 #for configuration which will upset the vagrant install process.
 unset UCF_FORCE_CONFFOLD
@@ -77,7 +85,7 @@ sudo wget -q https://raw.githubusercontent.com/artefactual/archivematica/stable/
 sudo ln -s /etc/apache2/sites-available/default.conf /etc/apache2/sites-enabled/default.conf
 sudo /etc/init.d/apache2 restart
 sudo freshclam
-sudo /etc/init.d/clamav-daemon start
+sudo /etc/init.d/clamav-daemon restart
 sudo /etc/init.d/elasticsearch restart
 sudo /etc/init.d/gearman-job-server restart
 sudo start archivematica-mcp-server
