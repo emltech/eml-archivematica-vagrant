@@ -48,6 +48,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        s.inline = "sudo service gearman-job-server restart"
        s.inline = "sudo start archivematica-mcp-server"
        s.inline = "sudo start archivematica-mcp-client"
-       s.inline = "sudo start fits"
+       s.inline = "sudo restart fits"
   end
 end
