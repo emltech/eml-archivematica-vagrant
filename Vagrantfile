@@ -11,7 +11,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 8000, host: 8000
   
   #nearby folder on host for novice users to appropriate folder on guest for Archivematica use.
-  config.vm.synced_folder "archivematica_data", "/home/vagrant/archivematica_data"
+  config.vm.synced_folder "archivematica_data", "/home/vagrant/archivematica_data", id: "archivematica-transfers",
+  :owner => "vagrant",
+  :group => "vagrant",
+  :mount_options => ["dmode=777","fmode=777"]
 
   #good values for testing, may need more with content
   config.vm.provider "virtualbox" do |v|
