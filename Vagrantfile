@@ -42,6 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", path: "archivematica_provisioner.sh"
   
   #always run to make sure services start. Elasticsearch is often not properly started. This is from step 7 of the install instructions.
+  #major problems getting elasticsearch to start. we do it twice here because oh god who knows 
   config.vm.provision "shell", run: "always" do |s|
        s.inline = "sudo /etc/init.d/clamav-daemon start"
        s.inline = "sudo service elasticsearch restart"
@@ -49,5 +50,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        s.inline = "sudo start archivematica-mcp-server"
        s.inline = "sudo start archivematica-mcp-client"
        s.inline = "sudo restart fits"
+       s.inline = "sleep 15s"
+       s.inline = "sudo service elasticsearch restart"
   end
 end
