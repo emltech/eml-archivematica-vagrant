@@ -28,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   If this is your first boot and you've just gone through provisioning, do the following:
   1. Reboot the VM by typing 'vagrant halt' and then 'vagrant up'
   2. Read the Archivematica installation instructions here:
-     https://www.archivematica.org/wiki/Install-1.3.0-packages
+     https://www.archivematica.org/wiki/Install-1.5.0-packages
      We've done everything up until the 'Test the storage service' section.
   3. Follow the Archivematica instructions on setting up the Storage Service
      available in your browser at:
@@ -40,4 +40,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   #install everything needed for archivematica
   config.vm.provision "shell", path: "archivematica_provisioner.sh"
+  
+  #always run to make sure services start. Elasticsearch is often not properly started. This is from step 7 of the install instructions.
+  config.vm.provision "shell", run: "always" do |s|
+       s.inline = "sudo /etc/init.d/clamav-daemon start"
+       s.inline = "sudo /etc/init.d/elasticsearch restart"
+       s.inline = "sudo service gearman-job-server restart"
+       s.inline = "sudo start archivematica-mcp-server"
+       s.inline = "sudo start archivematica-mcp-client"
+       s.inline = "sudo start fits"
+  end
 end
