@@ -5,15 +5,15 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/xenial64"
 
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 8000, host: 8000
-  
+
   #nearby folder on host for novice users to appropriate folder on guest for Archivematica use.
   config.vm.synced_folder "archivematica_data", "/home/vagrant/archivematica_data", id: "archivematica-transfers",
-  owner: "vagrant",
-  group: "vagrant",
+  owner: "ubuntu",
+  group: "ubuntu",
   mount_options: ["dmode=777","fmode=777"]
 
   #good values for testing, may need more with content
@@ -24,33 +24,31 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      v.customize ["modifyvm", :id, "--cpuexecutioncap", "90"]
   end
 
-  config.vm.post_up_message = "Hello and congrats! Your Archivematcia VM is setup. 
+  config.vm.post_up_message = "Hello and congrats! Your Archivematcia VM is setup.
   If this is your first boot and you've just gone through provisioning, do the following:
   1. Reboot the VM by typing 'vagrant halt' and then 'vagrant up'
   2. Read the Archivematica installation instructions here:
-     https://www.archivematica.org/wiki/Install-1.5.0-packages
+     https://www.archivematica.org/wiki/Install-1.6.0-packages
      We've done everything up until the 'Test the storage service' section.
   3. Follow the Archivematica instructions on setting up the Storage Service
      available in your browser at:
      http://localhost:8000
   4. Follow the Archivematica instructions on setting up your account
      available in your browser at
-     http://localhost:8080 
+     http://localhost:8080
   5. That's it!"
 
   #install everything needed for archivematica
   config.vm.provision "shell", path: "archivematica_provisioner.sh"
-  
-  #always run to make sure services start. Elasticsearch is often not properly started. This is from step 7 of the install instructions.
-  #major problems getting elasticsearch to start. we do it twice here because oh god who knows 
-  config.vm.provision "shell", run: "always" do |s|
-       s.inline = "sudo /etc/init.d/clamav-daemon start"
-       s.inline = "sudo service elasticsearch restart"
-       s.inline = "sudo service gearman-job-server restart"
-       s.inline = "sudo start archivematica-mcp-server"
-       s.inline = "sudo start archivematica-mcp-client"
-       s.inline = "sudo restart fits"
-       s.inline = "sleep 15s"
-       s.inline = "sudo service elasticsearch restart"
-  end
+
+  #always run to make sure services start.
+  # config.vm.provision "shell", run: "always" do |s|
+  #      s.inline = "sudo service elasticsearch restart"
+  #      s.inline = "sudo /etc/init.d/clamav-daemon start"
+  #      s.inline = "sudo service gearman-job-server restart"
+  #      s.inline = "sudo start archivematica-mcp-server"
+  #      s.inline = "sudo start archivematica-mcp-client"
+  #      s.inline = "sudo restart fits"
+  #      s.inline = "sleep 15s"
+  # end
 end
