@@ -34,18 +34,17 @@ sudo apt-get install -y debconf-utils
 
 sudo debconf-set-selections << EOF
 mysql-server-5.7 mysql-server/root_password password sweepstakes
-mysql-server-5.7 mysql-server/root_password_again sweepstakes
+mysql-server-5.7 mysql-server/root_password_again password sweepstakes
 mysql-server-5.7 mysql-server/root_password seen true
 mysql-server-5.7 mysql-server/root_password_again seen true
-archivematica-mcp-server archivematica-mcp-server/password-confirm sweepstakes
-archivematica-mcp-server archivematica-mcp-server/mysql/app-pass sweepstakes
-archivematica-mcp-server archivematica-mcp-server/app-password-confirm test
-archivematica-mcp-server archivematica-mcp-server/mysql/admin-pass test
+archivematica-mcp-server archivematica-mcp-server/password-confirm password sweepstakes
+archivematica-mcp-server archivematica-mcp-server/app-password-confirm password sweepstakes
+archivematica-mcp-server archivematica-mcp-server/mysql/app-pass password sweepstakes
+archivematica-mcp-server archivematica-mcp-server/mysql/admin-pass password sweepstakes
 archivematica-mcp-server archivematica-mcp-server/install-error select abort
 archivematica-mcp-server archivematica-mcp-server/dbconfig-install boolean true
 archivematica-mcp-server archivematica-mcp-server/internal/reconfiguring boolean false
 archivematica-mcp-server archivematica-mcp-server/purge boolean false
-archivematica-mcp-server archivematica-mcp-server/passwords-do-not-match error
 archivematica-mcp-server archivematica-mcp-server/database-type select mysql
 archivematica-mcp-server archivematica-mcp-server/db/app-user string archivematica
 archivematica-mcp-server archivematica-mcp-server/db/dbname string MCP
