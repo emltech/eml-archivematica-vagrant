@@ -117,4 +117,4 @@ sudo service archivematica-mcp-client start
 sudo service archivematica-storage-service start
 sudo service archivematica-dashboard start
 sudo service nginx restart
-sudo start fits
+sudo service fits start
