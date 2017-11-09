@@ -74,8 +74,8 @@ sudo ln -s /etc/nginx/sites-available/storage /etc/nginx/sites-enabled/storage
 
 #STEP 7 - update pip
 #new in 1.6 but apparently optional for Xenial. Going to skip it...
-#sudo wget https://bootstrap.pypa.io/get-pip.py
-#sudo python get-pip.py
+sudo wget https://bootstrap.pypa.io/get-pip.py
+sudo python get-pip.py
 
 #STEP 8 - install archivematica packages
 sudo apt-get install -y archivematica-mcp-server
