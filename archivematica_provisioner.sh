@@ -39,7 +39,7 @@ mysql-server-5.7 mysql-server/root_password seen true
 mysql-server-5.7 mysql-server/root_password_again seen true
 archivematica-mcp-server archivematica-mcp-server/password-confirm password sweepstakes
 archivematica-mcp-server archivematica-mcp-server/app-password-confirm password sweepstakes
-archivematica-mcp-server archivematica-mcp-server/mysql/app-pass password sweepstakes
+archivematica-mcp-server archivematica-mcp-server/mysql/app-pass password demo
 archivematica-mcp-server archivematica-mcp-server/mysql/admin-pass password sweepstakes
 archivematica-mcp-server archivematica-mcp-server/install-error select abort
 archivematica-mcp-server archivematica-mcp-server/dbconfig-install boolean true
